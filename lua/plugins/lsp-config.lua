@@ -25,7 +25,6 @@ return {
         capabilities = capabilities,
         filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
       })
-      lspconfig.eslint.setup({})
       lspconfig.html.setup({
         capabilities = capabilities
       })
