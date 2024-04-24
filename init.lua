@@ -11,6 +11,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("vim-options")
-require("lazy").setup("plugins")
+-- Leader key ( space )
+vim.g.mapleader = " "
 
+require('core.options').config()
+require("lazy").setup({
+  {import = "plugins"},
+},
+  {
+    performance = {
+      cache = {
+        enable = true
+      }
+    }
+  }
+)
+
+
+-- TODO:
+--
+-- jumping between <tags></tags> with %
