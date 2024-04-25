@@ -16,13 +16,12 @@ return {
         bset(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
         bset(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
         bset(bufnr, 'n', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-        -- bset(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
-        -- bset(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
-        -- bset(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
+        bset(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
+        bset(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
+        bset(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
         bset(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-        bset(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+        bset(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
         bset(bufnr, 'n', '<space>c', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-        bset(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
         bset(bufnr, 'v', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
         bset(bufnr, 'n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
         bset(bufnr, 'n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
@@ -41,7 +40,7 @@ return {
       end
 
       local servers = { 'volar', 'tsserver', 'svelte', 'lua_ls', 'gopls', 'cssls', 'gdscript', 'pyright', 'tailwindcss',
-        'emmet_language_server', 'clangd' }
+        'emmet_ls', 'clangd' }
       for _, lsp in pairs(servers) do
         local config = {
           on_attach = on_attach,
@@ -52,30 +51,30 @@ return {
         }
 
         if lsp == 'volar' then
-          config.on_attach = with_null_ls_formatter
-        end
-
-        if lsp == 'svelte' then
-          config.root_dir = nvim_lsp.util.root_pattern('svelte.config.js')
-          -- config.on_attach = with_null_ls_formatter
+          if is_npm_package_installed 'vue' then
+            config.on_attach = with_null_ls_formatter
+            config.filetypes = { 'typescript', 'javascript', 'vue', 'json' }
+          end
         end
 
         if lsp == 'tsserver' then
-          config.root_dir = function(startpath)
-            return nvim_lsp.util.root_pattern('package.json')(startpath)
+          if is_npm_package_installed 'vue' then
+            goto continue
+            -- ** this is for volar v2 ( which is currently kinda broken atm ) **
+            -- config.init_options = {
+            --   plugins = {
+            --     {
+            --       name = '@vue/typescript-plugin',
+            --       location = "node_modules/@vue/typescript-plugin",
+            --       languages = { 'javascript', 'typescript', 'vue' },
+            --     },
+            --   },
+            -- }
+            -- config.filetypes = { 'typescript', 'javascript', 'vue' }
           end
 
-          if is_npm_package_installed 'vue' then
-            config.init_options = {
-              plugins = {
-                {
-                  name = '@vue/typescript-plugin',
-                  location = "node_modules/@vue/typescript-plugin",
-                  languages = { 'javascript', 'typescript', 'vue' },
-                },
-              },
-            }
-            config.filetypes = { 'typescript', 'javascript', 'vue' }
+          config.root_dir = function(startpath)
+            return nvim_lsp.util.root_pattern('package.json')(startpath)
           end
 
           config.single_file_support = false
@@ -102,34 +101,33 @@ return {
           }
         end
 
-
-        if lsp == 'denols' then
-          config.root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc')
-          config.single_file_support = false
-          config.on_attach = with_null_ls_formatter
-        end
-
         nvim_lsp[lsp].setup(config)
+        ::continue::
       end
     end
   },
   {
     'nvimtools/none-ls.nvim',
+dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
     config = function()
       local bset = vim.api.nvim_buf_set_keymap
-      local opts = { noremap = true, silent = false }
+      local opts = { noremap = true, silent = true }
       local null_ls = require('null-ls')
 
-      null_ls.setup {
+      null_ls.setup({
         sources = {
+          null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.prettier,
-          null_ls.builtins.formatting.pg_format,
+          require("none-ls.diagnostics.eslint_d"),
+          null_ls.builtins.completion.spell,
+         require("none-ls.code_actions.eslint_d"),
         },
         on_attach = function(client, bufnr)
           bset(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          bset(bufnr, 'v', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
         end
-      }
+      })
     end
   },
 }
