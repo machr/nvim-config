@@ -19,6 +19,11 @@ return {
                     "yaml"
                 },
                 sync_install = false,
+                autotag = {
+                  enable = true,
+                  enable_rename = true,
+                  enable_close_on_slash = true,
+                },
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,
