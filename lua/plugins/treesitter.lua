@@ -1,34 +1,46 @@
 return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    config = function()
-      local config = require("nvim-treesitter.configs")
-      config.setup({
-        auto_install = true,
-        ensure_installed = {
-          "json",
-          "javascript",
-          "typescript",
-          "tsx",
-          "yaml",
-          "html",
-          "css",
-          "prisma",
-          "markdown",
-          "markdown_inline",
-          "svelte",
-          "graphql",
-          "bash",
-          "lua",
-          "vim",
-          "dockerfile",
-          "gitignore",
-          "query",
-      },
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
-    end
-  }
+    {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                ensure_installed = {
+                    "bash",
+                    "css",
+                    "comment",
+                    "dockerfile",
+                    "html",
+                    "javascript",
+                    "typescript",
+                    "json",
+                    "lua",
+                    "regex",
+                    "typescript",
+                    "php",
+                    "yaml"
+                },
+                sync_install = false,
+                highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false,
+                    disable = function(_, bufnr)
+                        local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                        local num_of_lines = vim.api.nvim_buf_line_count(bufnr)
+                        return num_of_lines > 50000
+                    end
+                },
+                indent = {
+                    enable = true,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = '<cr>',
+                        node_incremental = '<cr>',
+                        scope_incremental = '<s-cr>',
+                        node_decremental = '<bs>',
+                    },
+                },
+            }
+        end,
+    }
 }
