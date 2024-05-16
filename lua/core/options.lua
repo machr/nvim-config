@@ -17,6 +17,7 @@ M.config = function()
 	vim.o.tabstop = 2
 	vim.o.shiftwidth = 2
 	vim.o.softtabstop = 2
+	vim.opt.scrolloff = 8
 	vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
 	vim.opt.foldenable = false
 	vim.opt.foldmethod = "expr"
