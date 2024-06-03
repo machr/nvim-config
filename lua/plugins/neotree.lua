@@ -37,16 +37,24 @@ return {
 						enable = true,
 					},
 					filtered_items = {
+						--visible = true,
 						hide_dotfiles = false,
-						hide_gitignored = false,
+						hide_gitignored = true,
+						hide_by_name = {
+							".github",
+							"node_modules",
+							".gitignore",
+							"package-lock.json",
+						},
+						never_show = { ".git" },
 					},
-				},
-				event_handlers = {
-					{
-						event = "neo_tree_buffer_enter",
-						handler = function()
-							vim.cmd([[ setlocal relativenumber ]])
-						end,
+					event_handlers = {
+						{
+							event = "neo_tree_buffer_enter",
+							handler = function()
+								vim.cmd([[ setlocal relativenumber ]])
+							end,
+						},
 					},
 				},
 			})

@@ -10,6 +10,8 @@ return {
 		"handlebars",
 		"html",
 		"vue",
+		"svelte",
+		"blade",
 	},
 	config = function()
 		require("nvim-ts-autotag").setup()
