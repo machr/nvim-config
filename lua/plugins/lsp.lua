@@ -63,6 +63,7 @@ return {
 				"tailwindcss",
 				"bashls",
 				"jsonls",
+				"emmet_ls",
 			},
 			automatic_installation = { exclude = "lua_ls" },
 			handlers = {
@@ -74,9 +75,6 @@ return {
 				end,
 				-- Next, you can provide a dedicated handler for specific servers.
 				-- For example, a handler override for the `rust_analyzer`:
-				-- ["rust_analyzer"] = function ()
-				--     require("rust-tools").setup {}
-				-- end
 				-- ["tsserver"] = function()
 				--   require("lspconfig").tsserver.setup({
 				--     init_options = {
