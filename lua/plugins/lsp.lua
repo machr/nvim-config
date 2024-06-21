@@ -18,7 +18,6 @@ return {
 		require("mason-null-ls").setup({
 			ensure_installed = {
 				-- Opt to list sources here, when available in mason.
-				"prettierd",
 				"eslint_d",
 			},
 			automatic_installation = { exclude = { "stylua", "gitsigns" } },
@@ -115,7 +114,16 @@ return {
 		local configs = require("lspconfig/configs")
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+		lspconfig.eslint.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				codeActionOnSave = {
+					enable = true,
+					mode = "all",
+				},
+			},
+		})
 		lspconfig.emmet_ls.setup({
 			-- on_attach = on_attach,
 			capabilities = capabilities,
