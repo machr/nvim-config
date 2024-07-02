@@ -41,4 +41,16 @@ return {
 			})
 		end,
 	},
+	{
+		"windwp/nvim-ts-autotag",
+		cond = vim.g.not_in_vscode,
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
+	{
+		"windwp/nvim-autopairs",
+		cond = vim.g.not_in_vscode,
+		config = true,
+	},
 }

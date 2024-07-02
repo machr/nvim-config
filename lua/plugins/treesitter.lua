@@ -18,12 +18,7 @@ return {
 					"php",
 					"yaml",
 				},
-				sync_install = false,
-				autotag = {
-					enable = true,
-					enable_rename = true,
-					enable_close_on_slash = true,
-				},
+				sync_install = true,
 				highlight = {
 					enable = true,
 					use_languagetree = true,
