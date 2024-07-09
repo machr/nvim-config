@@ -20,7 +20,7 @@ M.config = function()
 	vim.opt.scrolloff = 8
 	vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
 	vim.opt.foldenable = false
-	vim.opt.foldmethod = "expr"
+	vim.opt.foldmethod = "indent"
 	vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 	vim.opt.timeoutlen = 400
 	vim.opt.ttimeoutlen = 10
