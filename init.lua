@@ -11,6 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.filetype.add({
+    pattern = {
+        [".*%.blade%.php"] = "blade",
+    },
+})
 -- Leader key ( space )
 vim.g.mapleader = " "
 
@@ -18,7 +23,6 @@ require('core.options').config()
 require("lazy").setup({
     { import = "plugins" }
 })
-
 
 -- TODO:
 --

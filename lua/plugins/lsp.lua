@@ -152,12 +152,6 @@ return {
 					}
 				end
 
-				if lsp == "denols" then
-					config.root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc")
-					config.single_file_support = false
-					config.on_attach = with_null_ls_formatter
-				end
-
 				nvim_lsp[lsp].setup(config)
 				::continue::
 			end
