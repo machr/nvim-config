@@ -16,14 +16,14 @@ vim.filetype.add({
         [".*%.blade%.php"] = "blade",
     },
 })
+
 -- Leader key ( space )
-vim.g.mapleader = " "
+ vim.g.mapleader = " "
 
 require('core.options').config()
+require('core.mappings').config()
+require('core.autocommands').config()
 require("lazy").setup({
     { import = "plugins" }
 })
 
--- TODO:
---
--- jumping between <tags></tags> with %
