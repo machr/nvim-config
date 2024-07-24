@@ -29,7 +29,7 @@ return {
 				bset(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 				bset(bufnr, "n", "<space>c", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 				bset(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-				bset(bufnr, "v", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+				bset(bufnr, "v", "<space>fa", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 				bset(bufnr, "n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
 				bset(bufnr, "n", "[e", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
 				bset(bufnr, "n", "]e", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
