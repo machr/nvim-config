@@ -22,7 +22,6 @@ vim.filetype.add({
 
 require('core.options').config()
 require('core.mappings').config()
-require('core.autocommands').config()
 require("lazy").setup({
     { import = "plugins" }
 })
