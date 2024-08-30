@@ -7,7 +7,7 @@ return {
       require("telescope").setup({
         defaults = {
           layout_strategy = "horizontal",
-          file_ignore_patterns = { ".git", "node_moudules" },
+          file_ignore_patterns = { ".git", "node%_modules/.*", "node_moudules" },
         },
         pickers = {
           live_grep = {

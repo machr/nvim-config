@@ -1,8 +1,18 @@
 return {
   {
-    "folke/tokyonight.nvim",
+    'rebelot/kanagawa.nvim',
+    enabled = true,
     lazy = false,
     priority = 1000,
+    config = function()
+      vim.cmd('colorscheme kanagawa')
+    end
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 999,
+    enabled = false,
     config = function()
       local transparent = false -- set to true if you would like to enable transparency
 
@@ -42,7 +52,7 @@ return {
         end, ]]
       })
 
-     vim.cmd("colorscheme tokyonight-moon")
+      vim.cmd("colorscheme tokyonight-moon")
     end,
   },
 }
