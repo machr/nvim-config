@@ -101,37 +101,6 @@ return {
 
           config.single_file_support = false
           config.on_attach = with_null_ls_formatter
-
-          config.settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all'
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all'
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayVariableTypeHints = true,
-
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          }
-
-                   config.single_file_support = false
-          config.on_attach = with_null_ls_formatter
         end
 
         if lsp == "lua_ls" then
