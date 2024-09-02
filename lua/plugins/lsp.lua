@@ -144,11 +144,12 @@ return {
         sources = {
           null_ls.builtins.formatting.prettier,
           null_ls.builtins.formatting.sql_formatter,
-          require("none-ls.diagnostics.eslint"),
+          require("none-ls.diagnostics.eslint_d"),
         },
         on_attach = function(client, bufnr)
-          bset(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-          bset(bufnr, "v", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+          bset(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+          bset(bufnr, "v", "<leader>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+          bset(bufnr, "n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
         end,
       })
     end,
