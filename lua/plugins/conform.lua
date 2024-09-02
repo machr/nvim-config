@@ -5,7 +5,6 @@ return {
     -- Conform will run multiple formatters sequentially
     go = { "goimports", "gofmt" },
     -- Use a sub-list to run only the first available formatter
-    javascript = { { "prettierd", "prettier" } },
     blade = { "blade-formatter" },
   },
   format_on_save = {
