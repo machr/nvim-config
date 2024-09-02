@@ -15,24 +15,19 @@ return {
         bset(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
         bset(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
         bset(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
+        bset(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
         bset(bufnr, "n", "<c-s>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
         bset(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", opts)
         bset(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", opts)
-        bset(
-          bufnr,
-          "n",
-          "<space>wl",
-          "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
-          opts
-        )
-        bset(bufnr, "n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+        bset(bufnr, "n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>", opts)
         bset(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
         bset(bufnr, "n", "<space>c", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
         bset(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-        bset(bufnr, "v", "<space>fa", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+        bset(bufnr, "v", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
         bset(bufnr, "n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
         bset(bufnr, "n", "[e", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
         bset(bufnr, "n", "]e", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
+        bset(bufnr, "n", "<space>ll", "<cmd>LspRestart<cr>", opts)
         require("illuminate").on_attach(client)
       end
 
@@ -60,6 +55,8 @@ return {
         "clangd",
         "gleam",
         "zls",
+        "dockerls",
+        "templ",
       }
       for _, lsp in pairs(servers) do
         local config = {
@@ -123,6 +120,12 @@ return {
           }
         end
 
+        if lsp == "denols" then
+          config.root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc")
+          config.single_file_support = false
+          config.on_attach = with_null_ls_formatter
+        end
+
         nvim_lsp[lsp].setup(config)
         ::continue::
       end
@@ -130,6 +133,10 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
+    enabled = true,
     config = function()
       local bset = vim.api.nvim_buf_set_keymap
       local opts = { noremap = true, silent = true }
@@ -139,6 +146,7 @@ return {
         sources = {
           null_ls.builtins.formatting.prettier,
           null_ls.builtins.formatting.sql_formatter,
+          require("none-ls.diagnostics.eslint"),
         },
         on_attach = function(client, bufnr)
           bset(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)

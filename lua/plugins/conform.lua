@@ -12,5 +12,5 @@ return {
     -- I recommend these options. See :help conform.format for details.
     lsp_format = "fallback",
     timeout_ms = 500,
-  },
+  }
 }
